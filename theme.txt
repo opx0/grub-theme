@@ -2,7 +2,7 @@ title-text: ""
 title-font: "DejaVu Sans Regular 48"
 message-font: "Terminus 16"
 message-color: "#7f8c8d"
-message-bg-color: "#4d4d4d"
+message-bg-color: "#969696ff"
 desktop-color: "#000000"
 desktop-image: "background.png"
 terminal-font: "Terminus 14"
@@ -17,7 +17,7 @@ terminal-border: "0"
     height = 35
     left = 0%
     width = 100%
-#text = "Welcome to Garuda"
+    #text = "BTW its Arch"
     align = "center"
     font = "DejaVu Sans Regular 48"
     color = "#ffffff"
