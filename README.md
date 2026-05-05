@@ -4,6 +4,32 @@ A dark, atmospheric GRUB2 bootloader theme inspired by the game Hollow Knight. F
 
 ![Theme Preview](background.png)
 
+## Quick install (one line)
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/opx0/grub-theme/main/install.sh | sudo bash
+```
+
+That's it — no clone, no manual file copying. The installer auto-fetches the theme from GitHub, backs up your current GRUB config, installs the theme to `/boot/grub/themes/hollow-knight/`, and regenerates the menu.
+
+### Headless / non-interactive
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/opx0/grub-theme/main/install.sh | sudo bash -s -- --yes --no-reboot
+```
+
+### Pin to a specific branch, tag, or commit
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/opx0/grub-theme/main/install.sh | sudo bash -s -- --branch v1.0.0
+```
+
+### Uninstall (one line)
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/opx0/grub-theme/main/uninstall.sh | sudo bash
+```
+
 ## Features
 
 - **Dark aesthetic** with Hollow Knight-themed background artwork
@@ -22,21 +48,38 @@ The theme includes icons for:
 - **Other**: Windows, macOS, Android
 - **Special**: Recovery mode, EFI, shutdown, restart
 
-## Installation
+## Installation options
 
-### Automatic Installation (Recommended)
+### Local clone
 
 ```bash
+git clone https://github.com/opx0/grub-theme
+cd grub-theme
 sudo ./install.sh
 ```
 
-The script will:
-- Backup your existing GRUB theme (if any)
-- Copy theme files to `/boot/grub/themes/hollow-knight/`
-- Update GRUB configuration
-- Regenerate GRUB menu
+The installer:
+- Detects local files when run from a clone, or auto-fetches a tarball when piped from `curl`
+- Backs up any existing theme to `~/.grub-theme-backups/`
+- Backs up `/etc/default/grub` before editing it
+- Installs theme files to `/boot/grub/themes/hollow-knight/`
+- Sets sensible `GRUB_GFXMODE` / `GRUB_GFXPAYLOAD_LINUX` defaults if missing
+- Regenerates the GRUB menu (`update-grub` / `grub-mkconfig` / `grub2-mkconfig`)
 
-### Manual Installation
+### Installer flags
+
+| Flag | Effect |
+| ---- | ------ |
+| `-y`, `--yes` | Assume yes to prompts (non-interactive) |
+| `-f`, `--force` | Overwrite existing theme without confirmation (implies `-y`) |
+| `-n`, `--no-reboot` | Skip the post-install reboot prompt |
+| `-b REF`, `--branch REF` | Use a specific branch, tag, or commit |
+| `-d`, `--debug` | Verbose debug output |
+| `-h`, `--help` | Show usage |
+
+When piped via `curl ... | sudo bash`, the installer detects the missing TTY and runs non-interactively with safe defaults.
+
+### Manual installation
 
 1. **Copy theme files:**
    ```bash
@@ -132,10 +175,19 @@ Modify font references in `theme.txt` to adjust text sizes.
 
 ## Uninstallation
 
-### Using uninstall script
+### One-line uninstall
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/opx0/grub-theme/main/uninstall.sh | sudo bash
+```
+
+### Local uninstall script
+
 ```bash
 sudo ./uninstall.sh
 ```
+
+Useful flags: `--purge` (also delete theme files), `--keep-files` (keep them), `--yes` (non-interactive), `--no-reboot`.
 
 ### Manual uninstallation
 1. Edit `/etc/default/grub` and remove/comment the `GRUB_THEME` line
